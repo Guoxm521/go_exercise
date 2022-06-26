@@ -2,6 +2,7 @@ package utils
 
 import (
 	"golang.org/x/text/encoding/simplifiedchinese"
+	"io/ioutil"
 	"os"
 )
 
@@ -36,4 +37,18 @@ func PathExists(path string) (bool, error) {
 		return false, nil
 	}
 	return false, err
+}
+
+//WriteFile 这种会覆盖掉原先内容
+func WriteFile(fileName, data string) {
+	err := ioutil.WriteFile(fileName, []byte(data), os.ModePerm)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func Check(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
