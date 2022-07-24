@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"exercise/utils"
+	"example.com/m/v2/utils"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly"
@@ -15,8 +15,8 @@ import (
 
 const (
 	baseFolder = "./images/shehui/"
-	baseUrl    = "http://www.je678.com"
-	startUrl   = "http://www.je678.com/shehui/"
+	baseUrl    = "http://www.***.com"
+	startUrl   = "http://www.***.com/shehui/"
 )
 
 func main() {
@@ -44,6 +44,7 @@ func ImageSpider() {
 				var data []byte = []byte(name)
 				str = utils.ConvertByte2String(data, "GB18030")
 				CreateFolder(str)
+
 			}
 			href, found := s.Find(".description a").Attr("href")
 			filepath := fmt.Sprintf("%s%s", baseFolder, str)
