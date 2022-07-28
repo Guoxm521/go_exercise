@@ -1,0 +1,7 @@
+.settings
+.DS_Store
+.idea
+*.exe
+/upload
+/tmp
+go.sum
