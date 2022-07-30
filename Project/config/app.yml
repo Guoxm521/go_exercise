@@ -1,0 +1,26 @@
+server:
+  mode: debug # debug,release,test
+  host: 0.0.0.0 #主机
+  port: 8000 #端口
+  enable_console_route: true #控制台是否输出路由
+  app_id: 10101 #签名密钥appKey
+  app_key: 9ZwFiE9cbyvfoHnXuib2UUaEseoCnAnW
+#MySQL
+mysql:
+  host: 192.168.31.44 #数据库连接地址
+  port: 3306 #端口
+  user: root #用户名
+  password: 123456 #密码
+  dbname: gxm #数据库
+  prefix: gxm_ #表前缀
+  max_idle_conn: 1000000 #设置连接池的空闲数大小
+  max_open_conn: 5000000 #设置最大打开连接数
+  show_sql: true #控制台是否打印SQL语句
+
+#Redis
+redis:
+  host: 192.168.31.44 #Redis连接地址
+  port: 6379 #端口
+  password: 123456 #密码
+  pool_size: 100 #池大小
+  db_num: 3 #选择db
