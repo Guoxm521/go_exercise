@@ -1,5 +1,10 @@
 package db
 
+
+func NewAccount() *Account {
+	_self := new(Account)
+	return _self
+}
 type Account struct {
 	BaseHeader  `xorm:"extends"`
 	CompanyId   int64  `xorm:"int(11) index default 0 not null comment('公司id')" json:"company_id"`             //公司id
@@ -14,3 +19,7 @@ type Account struct {
 	ModeFooter  `xorm:"extends"`
 }
 
+//GetByAccountID ...
+func (that *Account) GetByAccountID(accountID interface{}) (bool, error) {
+	return engine.Where("account_id = ?", accountID).Get(that)
+}
