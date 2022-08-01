@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	initStatus   bool
-	engine       *xorm.Engine
+	initStatus bool
+	engine     *xorm.Engine
 )
 
 //SetORM ...
@@ -19,16 +19,18 @@ func SetORM(xormEngine *xorm.Engine) {
 	Init()
 }
 
-func Init()  {
+func Init() {
 	if initStatus {
 		return
 	}
-	_slice := []interface{} {
+	_slice := []interface{}{
 		new(Account),
+		new(GithubTrending),
+		new(GithubLanguage),
 	}
-	if err := engine.Sync2(_slice...); err != nil {
-		panic("db init fail!" + err.Error())
-	}
+	//if err := engine.Sync2(_slice...); err != nil {
+	//	panic("db init fail!" + err.Error())
+	//}
 	//同步字段类型、注释，默认关闭
 	_syncComment := false
 	if _syncComment {
@@ -57,7 +59,7 @@ func Init()  {
 				if len(_matchesComment) > 0 && len(_matchesType) > 0 {
 					_sqlSlice := []string{
 						"alter table",
-						"`"  + _t.Name() + "`",
+						"`" + _t.Name() + "`",
 						"modify column",
 						"`" + _f.Name + "`",
 						_matchesType[0][1],
@@ -86,5 +88,5 @@ func Init()  {
 			}
 		}
 	}
-	initStatus  = true
- }
+	initStatus = true
+}
