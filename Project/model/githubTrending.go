@@ -37,5 +37,13 @@ func (that *GithubTrending) Add() {
 }
 
 func (that *GithubTrending) List() (interface{}, error) {
-	return nil, nil
+	that.init()
+	_mode := that.mode
+	_slice := make([]*GithubTrending, 0)
+	for i, i2 := range collection {
+
+	}
+	_mode.Add()
+	_data, _err := _mode.List(1, 10)
+	return _data, _err
 }
