@@ -21,7 +21,22 @@ type GithubTrending struct {
 	ModeFooter   `xorm:"extends"`
 }
 
-//GetByAccountID ...
-func (that *GithubTrending) GetByAccountID(accountID interface{}) (bool, error) {
-	return engine.Where("account_id = ?", accountID).Get(that)
+func (that *GithubTrending) Add(data interface{}) (int64, error) {
+	return engine.Insert(data)
+}
+
+func (that *GithubTrending) List(page, size int) ([]*GithubTrending, error) {
+	if page < 1 {
+		page = 1
+	}
+	if size < 1 {
+		size = 50
+	}
+	_start := (page - 1) * size
+	_dataList := make([]*GithubTrending, 0)
+	engine.Limit(size, _start)
+	if _err := engine.Desc("id").Find(&_dataList); _err != nil {
+		return nil, _err
+	}
+	return _dataList, nil
 }
