@@ -61,7 +61,7 @@ func (that *Sync) Cron() func() {
 		c := cron.New(cron.WithSeconds())
 		//c.AddFunc("@every 10s", func() {
 		//})
-		c.AddFunc("00 50 22 * * ?", func() {
+		c.AddFunc("00 50 05 * * ?", func() {
 			fmt.Println("=== 每天23点50汇总当日进出客流量推送 ===")
 			for _, _v1 := range _searchList {
 				time.Sleep(120 * time.Second)

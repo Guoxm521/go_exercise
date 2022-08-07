@@ -1,1 +1,1 @@
-docker run -p 8010:8010 go_docker_project
+docker run -p 8010:8010 -itd go_docker_project
