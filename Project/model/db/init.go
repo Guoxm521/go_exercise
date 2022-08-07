@@ -27,10 +27,11 @@ func Init() {
 		new(Account),
 		new(GithubTrending),
 		new(GithubLanguage),
+		new(GithubSince),
 	}
-	//if err := engine.Sync2(_slice...); err != nil {
-	//	panic("db init fail!" + err.Error())
-	//}
+	if err := engine.Sync2(_slice...); err != nil {
+		panic("db init fail!" + err.Error())
+	}
 	//同步字段类型、注释，默认关闭
 	_syncComment := false
 	if _syncComment {
