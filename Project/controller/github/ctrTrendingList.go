@@ -1,8 +1,8 @@
 package github
 
 import (
-	"example.com/m/v2/Project/common"
-	"example.com/m/v2/Project/model"
+	"example.com/m/v2/common"
+	"example.com/m/v2/model"
 	"github.com/gin-gonic/gin"
 )
 

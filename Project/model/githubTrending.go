@@ -1,6 +1,6 @@
 package model
 
-import "example.com/m/v2/Project/model/db"
+import "example.com/m/v2/model/db"
 
 func (that *Logic) NewGithubTrending() *GithubTrending {
 	return &GithubTrending{}

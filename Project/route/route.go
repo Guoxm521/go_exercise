@@ -1,11 +1,11 @@
 package route
 
 import (
-	"example.com/m/v2/Project/controller/github"
-	"example.com/m/v2/Project/controller/ping"
-	"example.com/m/v2/Project/database"
-	"example.com/m/v2/Project/model"
-	"example.com/m/v2/Project/model/db"
+	"example.com/m/v2/controller/github"
+	"example.com/m/v2/controller/ping"
+	"example.com/m/v2/database"
+	"example.com/m/v2/model"
+	"example.com/m/v2/model/db"
 	"github.com/gin-gonic/gin"
 )
 

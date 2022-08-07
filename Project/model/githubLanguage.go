@@ -1,7 +1,7 @@
 package model
 
 import (
-	"example.com/m/v2/Project/model/db"
+	"example.com/m/v2/model/db"
 )
 
 func (that *Logic) NewGithubLanguage() *GithubLanguage {

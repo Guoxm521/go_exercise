@@ -1,7 +1,7 @@
 package spider
 
 import (
-	"example.com/m/v2/Project/model/db"
+	"example.com/m/v2/model/db"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly"

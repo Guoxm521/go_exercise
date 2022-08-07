@@ -1,8 +1,8 @@
 package model
 
 import (
-	"example.com/m/v2/Project/model/db"
-	"example.com/m/v2/Project/spider"
+	"example.com/m/v2/model/db"
+	"example.com/m/v2/spider"
 	"fmt"
 	"github.com/robfig/cron/v3"
 	"time"

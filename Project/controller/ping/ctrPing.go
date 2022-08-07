@@ -1,8 +1,8 @@
 package ping
 
 import (
-	"example.com/m/v2/Project/model"
-	"example.com/m/v2/Project/model/db"
+	"example.com/m/v2/model"
+	"example.com/m/v2/model/db"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"

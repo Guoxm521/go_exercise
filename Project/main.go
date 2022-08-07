@@ -1,7 +1,7 @@
 package main
 
 import (
-	"example.com/m/v2/Project/route"
+	"example.com/m/v2/route"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"
