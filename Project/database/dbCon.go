@@ -24,7 +24,7 @@ type MysqlModel struct {
 	ShowSql     bool   `yaml:"show_sql"`      // 控制台是否打印SQL语句
 }
 
-func ConnMySQL(configInfo *MysqlModel)  {
+func ConnMySQL(configInfo *MysqlModel) {
 	if configInfo == nil {
 		fmt.Println("mysql配置文件初始化失败")
 		return
@@ -37,7 +37,7 @@ func ConnMySQL(configInfo *MysqlModel)  {
 	prefix := configInfo.Prefix
 	maxIdleConn := configInfo.MaxIdleConn
 	maxOpenConn := configInfo.MaxOpenConn
-	mysqlInfo := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8", user, password, host, port, dbName)
+	mysqlInfo := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4", user, password, host, port, dbName)
 	_orm, _err := xorm.NewEngine("mysql", mysqlInfo)
 	if _err != nil {
 		_, file, line, _ := runtime.Caller(1)

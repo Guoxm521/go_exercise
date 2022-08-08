@@ -2,14 +2,14 @@ package main
 
 import (
 	"example.com/m/v2/route"
+	"example.com/m/v2/spider"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"
 )
 
 func main() {
-	//github := new(spider.GithubTrending)
-	//github.NewCollector().SpiderGithub()
+
 	_config, _err := Init()
 	if _err != nil {
 		panic("配置错误" + _err.Error())
@@ -21,5 +21,13 @@ func main() {
 		Addr:    runHost,
 		Handler: router,
 	}
+	_search := &spider.SearchStruct{
+		Since:        "daily",
+		SinceType:    1,
+		Language:     "PHP",
+		LanguageType: 1,
+	}
+	github := new(spider.GithubTrending)
+	github.NewCollector(_search).SpiderGithub()
 	router.Run(_gin.Addr)
 }

@@ -43,26 +43,9 @@ func (that *Sync) Cron() func() {
 		}
 		fmt.Println("========err========", _err)
 		fmt.Println("-==================准备只选")
-		//for _, _v1 := range _searchList {
-		//	time.Sleep(10 * time.Second)
-		//	fmt.Println("=========================", _v1)
-		//	for {
-		//		github := new(spider.GithubTrending)
-		//		data, _err := github.NewCollector(_v1).SpiderGithub()
-		//		if _err != "" {
-		//			fmt.Println("===========我是爬虫中的错误===============，", _err)
-		//			time.Sleep(10 * time.Second)
-		//		} else {
-		//			fmt.Println("=================结果==================", data)
-		//			break
-		//		}
-		//	}
-		//}
 		c := cron.New(cron.WithSeconds())
-		//c.AddFunc("@every 10s", func() {
-		//})
-		c.AddFunc("00 50 05 * * ?", func() {
-			fmt.Println("=== 每天23点50汇总当日进出客流量推送 ===")
+		c.AddFunc("00 00 22 * * ?", func() {
+			fmt.Println("=== 每天22点00爬取数据 ===")
 			for _, _v1 := range _searchList {
 				time.Sleep(120 * time.Second)
 				for {

@@ -10,7 +10,7 @@ type GithubTrending struct {
 	Author       string `xorm:"varchar(100) default '' comment('作者')" json:"author"`
 	Repo         string `xorm:"varchar(100) default '' comment('项目仓库')" json:"repo"`
 	Url          string `xorm:"varchar(255) default '' comment('项目链接')" json:"url"`
-	Desc         string `xorm:"varchar(255) default '' comment('简介')" json:"desc"`
+	Desc         string `xorm:"text comment('简介')" json:"desc"`
 	Starts       string `xorm:"varchar(100) default '' comment('目前start数')" json:"starts"`
 	Forks        string `xorm:"varchar(100) default '' comment('目前start数')" json:"forks"`
 	Language     string `xorm:"varchar(100) default '' comment('语言')" json:"language"`

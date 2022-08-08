@@ -15,8 +15,9 @@ const (
 
 type GithubTrending struct {
 	c            *colly.Collector
-	SinceType    int `json:"since_type"`
-	LanguageType int `json:"language_type"`
+	SinceType    int    `json:"since_type"`
+	LanguageType int    `json:"language_type"`
+	BaseUrl      string `json:"base_url"`
 }
 
 type SearchStruct struct {
@@ -25,6 +26,8 @@ type SearchStruct struct {
 	Language     string `json:"language"`
 	LanguageType int    `json:"language_type"`
 }
+
+var _trendingList = make([]*db.GithubTrending, 0)
 
 func (that *GithubTrending) NewCollector(params *SearchStruct) *GithubTrending {
 	_baseUrl := baseUrl + "/" + params.Language + "?since=" + params.Since
@@ -38,6 +41,7 @@ func (that *GithubTrending) NewCollector(params *SearchStruct) *GithubTrending {
 		RandomDelay: 500 * time.Microsecond,
 		Parallelism: 12,
 	})
+	that.BaseUrl = _baseUrl
 	that.c = c
 	return that
 }
@@ -53,6 +57,14 @@ func (that *GithubTrending) SpiderGithub() (data interface{}, err string) {
 	//that.getLanguage()
 	//that.getSince()
 	that.getContent()
+	c.OnScraped(func(response *colly.Response) {
+		if len(_trendingList) > 0 {
+			_data, _err := db.NewGithubTrending().Add(&_trendingList)
+			fmt.Println("=============数据库插入数据===========_data", _data)
+			fmt.Println("========================_err", _err)
+			_trendingList = make([]*db.GithubTrending, 0)
+		}
+	})
 	c.OnError(func(response *colly.Response, err error) {
 		fmt.Println("response1233123", response.StatusCode)
 		fmt.Println("response1233123", len(response.Body))
@@ -60,7 +72,7 @@ func (that *GithubTrending) SpiderGithub() (data interface{}, err string) {
 		_err = err.Error()
 
 	})
-	c.Visit(baseUrl)
+	c.Visit(that.BaseUrl)
 	if _err != "" {
 		return nil, _err
 	} else {
@@ -99,21 +111,8 @@ func (that *GithubTrending) getSince() {
 	})
 }
 
-//type ProjectDetailStruct struct {
-//	Url        string `json:"url",des:"项目链接"`
-//	Author     string `json:"author",des:"作者"`
-//	Desc       string `json:"desc",des:"简介"`
-//	Repo       string `json:"repo",des:"项目仓库"'`
-//	Starts     int    `json:"starts",des:"目前start数"`
-//	Forks      int    `json:"forks",des:"目前forks数"`
-//	Language   int    `json:"language",des:"语言"`
-//	AddedStars string `json:"added_stars",des:"今天或者这周或者这个月的starts数"`
-//	Avatars    string `json:"avatars",des:"项目贡献者的头像地址集合"`
-//}
-
 func (that *GithubTrending) getContent() {
 	c := that.c
-	_trendingList := make([]*db.GithubTrending, 0)
 	c.OnHTML(".Box", func(e *colly.HTMLElement) {
 		e.DOM.Find(".Box-row").Each(func(i int, s *goquery.Selection) {
 			url, _ := s.Find(".lh-condensed > a").Attr("href")
@@ -147,9 +146,5 @@ func (that *GithubTrending) getContent() {
 			_item.SinceType = that.SinceType
 			_trendingList = append(_trendingList, _item)
 		})
-		_data, _err := db.NewGithubTrending().Add(&_trendingList)
-		fmt.Println("========================_data", _data)
-		fmt.Println("========================_err", _err)
 	})
-
 }
