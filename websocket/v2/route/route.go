@@ -1,6 +1,7 @@
 package route
 
 import (
+	"example.com/m/v2/websocket/v2/ws"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,4 +16,6 @@ func RouterApi(router *gin.Engine) {
 			"body":  "这里是内容",
 		})
 	})
+	//	socket 服务
+	router.GET("/socket", ws.RunSocket)
 }
