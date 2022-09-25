@@ -43,6 +43,12 @@
                         appendLog(item);
                     }
                 };
+                conn.onopen = function () {
+                    setInterval(() => {
+                        conn.send('哈哈哈哈')
+                    },1000)
+                }
+
             } else {
                 var item = document.createElement("div");
                 item.innerHTML = "<b>Your browser does not support WebSockets.</b>";

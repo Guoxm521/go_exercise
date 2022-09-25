@@ -49,10 +49,10 @@ func (c *Client) Write() {
 				_ = c.Socket.WriteMessage(websocket.CloseMessage, []byte{})
 				return
 			}
-			log.Printf("client [%s] write message: %s", "id", string(message))
+			log.Printf("client [%s] write message: %s", c.Id, string(message))
 			err := c.Socket.WriteMessage(websocket.TextMessage, message)
 			if err != nil {
-				log.Printf("client [%s] writemessage err: %s", "id", err)
+				log.Printf("client [%s] writemessage err: %s", c.Id, err)
 			}
 		}
 	}

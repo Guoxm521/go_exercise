@@ -17,5 +17,5 @@ func RouterApi(router *gin.Engine) {
 		})
 	})
 	//	socket 服务
-	router.GET("/socket", ws.RunSocket)
+	router.GET("/socket", ws.Server)
 }
