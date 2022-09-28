@@ -71,4 +71,3 @@ func Demo(message chan []byte) {
 
 	cmd.Wait()
 }
-cd

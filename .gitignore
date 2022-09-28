@@ -2,6 +2,8 @@
 .DS_Store
 .idea
 *.exe
+websocket/vue3chat/node_modules
+websocket/vue3chat/dist
 /upload
 /tmp
 go.sum
