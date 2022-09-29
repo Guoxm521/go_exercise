@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
-	"time"
 )
 
 func Server(gin *gin.Context) {
@@ -26,7 +25,7 @@ func RunSocket(gin *gin.Context) {
 		return true
 	}
 	conn, err := wsUpgrade.Upgrade(gin.Writer, gin.Request, nil)
-	defer conn.Close()
+	//defer conn.Close() //链接关闭
 	if err != nil {
 		log.Printf("websocket connect error: %s", gin.Param("channel"))
 		return
@@ -40,12 +39,13 @@ func RunSocket(gin *gin.Context) {
 	WebsocketManager.RegisterClient(client)
 	go client.Read()
 	go client.Write()
+	client.Message <- []byte("测试")
 	//测试函数
 	//Demo(client.Message)
-	for {
-		time.Sleep(1 * time.Second)
-		client.Message <- []byte("测试")
-	}
+	//for {
+	//	time.Sleep(1 * time.Second)
+	//	client.Message <- []byte("测试")
+	//}
 
 }
 

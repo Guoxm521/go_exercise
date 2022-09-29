@@ -164,10 +164,11 @@ let select_icon = (index) => {
   left: 80px;
   color: #333;
 }
-::v-deep .el-form-item {
+:deep(.el-form-item) {
   width: 300px;
 }
-.buttons ::v-deep .el-form-item__content {
+
+:deep(.buttons .el-form-item__content) {
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,6 +1,7 @@
 package ws
 
 import (
+	"fmt"
 	"github.com/gorilla/websocket"
 	"log"
 )
@@ -33,7 +34,10 @@ type BroadCastMessageData struct {
 func (c *Client) Read() {
 	for {
 		messageType, message, err := c.Socket.ReadMessage()
+		fmt.Println("message", message)
 		if err != nil || messageType == websocket.CloseMessage {
+			fmt.Println("err", err)
+			fmt.Println("messageType", websocket.CloseMessage)
 			break
 		}
 		log.Printf("client [%s] receive message: %s", "id", string(message))

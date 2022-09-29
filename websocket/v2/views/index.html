@@ -44,9 +44,10 @@
                     }
                 };
                 conn.onopen = function () {
-                    setInterval(() => {
-                        conn.send('哈哈哈哈')
-                    },1000)
+                    conn.send('哈哈哈哈')
+                    // setInterval(() => {
+                    //     conn.send('哈哈哈哈1')
+                    // },500)
                 }
 
             } else {
