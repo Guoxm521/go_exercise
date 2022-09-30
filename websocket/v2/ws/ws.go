@@ -38,6 +38,8 @@ func (c *Client) Read() {
 		if err != nil || messageType == websocket.CloseMessage {
 			fmt.Println("err", err)
 			fmt.Println("messageType", websocket.CloseMessage)
+			c.Socket.Close()
+			close(c.Message)
 			break
 		}
 		log.Printf("client [%s] receive message: %s", "id", string(message))

@@ -20,6 +20,10 @@ func Server(gin *gin.Context) {
 }
 
 func RunSocket(gin *gin.Context) {
+	//defer func() {
+	//	_err := recover()
+	//	fmt.Println("_err", _err)
+	//}()
 	wsUpgrade := websocket.Upgrader{}
 	wsUpgrade.CheckOrigin = func(r *http.Request) bool {
 		return true
@@ -43,10 +47,9 @@ func RunSocket(gin *gin.Context) {
 	//测试函数
 	//Demo(client.Message)
 	//for {
-	//	time.Sleep(1 * time.Second)
-	//	client.Message <- []byte("测试")
+	//	time.Sleep(120 * time.Second)
+	//	client.Message <- []byte("测试3123")
 	//}
-
 }
 
 func Demo(message chan []byte) {
