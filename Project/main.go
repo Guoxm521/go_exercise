@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-
 	_config, _err := Init()
 	if _err != nil {
 		panic("配置错误" + _err.Error())

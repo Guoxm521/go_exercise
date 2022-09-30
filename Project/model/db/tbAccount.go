@@ -1,13 +1,12 @@
 package db
 
-
 func NewAccount() *Account {
 	_self := new(Account)
 	return _self
 }
+
 type Account struct {
 	BaseHeader  `xorm:"extends"`
-	CompanyId   int64  `xorm:"int(11) index default 0 not null comment('公司id')" json:"company_id"`             //公司id
 	AccountId   int64  `xorm:"int(11) not null unique(account_id) comment('账号id')" json:"account_id"`          //账号Id
 	Account     string `xorm:"varchar(30) default '' not null unique(account) comment('登录账号')" json:"account"` //登录账号
 	Password    string `xorm:"varchar(100) default '' not null comment('登陆密码')" json:"password"`               //登陆密码

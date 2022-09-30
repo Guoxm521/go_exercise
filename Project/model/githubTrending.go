@@ -40,5 +40,9 @@ func (that *GithubTrending) List() (interface{}, error) {
 	that.init()
 	_mode := that.mode
 	_data, _err := _mode.List(1, 10)
-	return _data, _err
+	_count, _err := _mode.Count()
+	_mp := make(map[string]interface{}, 0)
+	_mp["count"] = _count
+	_mp["data"] = _data
+	return _mp, _err
 }

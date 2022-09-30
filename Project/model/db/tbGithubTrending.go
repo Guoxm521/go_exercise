@@ -34,9 +34,12 @@ func (that *GithubTrending) List(page, size int) ([]*GithubTrending, error) {
 	}
 	_start := (page - 1) * size
 	_dataList := make([]*GithubTrending, 0)
-	engine.Limit(size, _start)
-	if _err := engine.Desc("id").Find(&_dataList); _err != nil {
+	if _err := engine.Limit(size, _start).Desc("id").Find(&_dataList); _err != nil {
 		return nil, _err
 	}
 	return _dataList, nil
+}
+func (that *GithubTrending) Count() (int64, error) {
+	count, err := engine.Count(that)
+	return count, err
 }
