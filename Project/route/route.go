@@ -24,6 +24,7 @@ func RouterApi(router *gin.Engine) {
 	jwt := router.Group("/")
 	jwt.Use(middleware.JWT())
 	{
+		jwt.GET("/ping1", ping.Ping())
 		jwt.POST("/account/add", account.AccountAdd())
 	}
 

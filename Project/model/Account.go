@@ -2,6 +2,7 @@ package model
 
 import (
 	"errors"
+	"example.com/m/v2/middleware"
 	"example.com/m/v2/model/db"
 	uuid "github.com/satori/go.uuid"
 )
@@ -59,7 +60,14 @@ func (that *Account) Login() (interface{}, error) {
 		return nil, _err
 	}
 	_mode.GetByAccountID(that.mode.AccountId)
+	user := middleware.UserInfo{
+		Account:   _mode.Account,
+		Password:  _mode.Password,
+		AccountId: _mode.AccountId,
+	}
+	tokenString, _err := middleware.GenerateToken(user)
 	_mp := make(map[string]interface{}, 0)
 	_mp["account"] = _mode.Account
+	_mp["token"] = tokenString
 	return _mp, nil
 }
