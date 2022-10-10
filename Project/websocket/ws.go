@@ -71,7 +71,7 @@ func (c *Client) Read() {
 			WebsocketManager.SendGroup("123123", _message)
 		default:
 			if string(message) == "heartbeat" {
-				c.Socket.WriteMessage(websocket.TextMessage, []byte(`{"status":0,"data":"heartbeat ok"}`))
+				c.Socket.WriteMessage(websocket.TextMessage, []byte(`{"status":0,"data":"heartbeat ok312321312312"}`))
 			}
 		}
 	}

@@ -22,7 +22,7 @@ func RunSocket(gin *gin.Context) {
 		fmt.Println("_err12", _err)
 	}()
 	wsUpgrade := websocket.Upgrader{
-		Subprotocols: []string{"token"},
+		//Subprotocols: []string{"token"},
 	}
 	wsUpgrade.CheckOrigin = func(r *http.Request) bool {
 		return true
