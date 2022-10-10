@@ -2,6 +2,7 @@ package websocket
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/websocket"
 	"log"
 	"time"
@@ -37,8 +38,6 @@ type Msg struct {
 	Data   interface{} `json:"data"`
 }
 
-var clientMsg = Msg{}
-
 const (
 	msgTypeOnline        = 1 // 上线
 	msgTypeOffline       = 2 // 离线
@@ -62,8 +61,19 @@ func (c *Client) Read() {
 			break
 		}
 		log.Printf("client [%s] receive message: %s", c.Id, string(message))
-		//c.Message <- message
-		WebsocketManager.SendGroup("123123", message)
+		_message, status, _ := formatServeMsgStr(message)
+		switch status {
+		case msgTypePrivateChat:
+			fmt.Println("私聊")
+		case msgTypePublicChat:
+			group, _ := clientMsg.Data.(map[string]interface{})["group"].(string)
+			fmt.Println("group", group)
+			WebsocketManager.SendGroup("123123", _message)
+		default:
+			if string(message) == "heartbeat" {
+				c.Socket.WriteMessage(websocket.TextMessage, []byte(`{"status":0,"data":"heartbeat ok"}`))
+			}
+		}
 	}
 }
 
@@ -90,25 +100,38 @@ func (c *Client) Write() {
 	}
 }
 
-//avatar_id
-//room_id
-//to_user
-//uid
-//username
-func formatServeMsgStr(status int) ([]byte, Msg) {
+var clientMsg = Msg{}
+
+func formatServeMsgStr(message []byte) ([]byte, int, error) {
+	_err := json.Unmarshal(message, &clientMsg)
+	if _err != nil {
+		log.Printf("消息解析失败,消息[%s],错误[%s],", _err, string(message))
+		return nil, 0, _err
+	}
+	username, _ := clientMsg.Data.(map[string]interface{})["username"].(string)
+	uid, _ := clientMsg.Data.(map[string]interface{})["uid"].(string)
+	group, _ := clientMsg.Data.(map[string]interface{})["group"].(string)
+	content, _ := clientMsg.Data.(map[string]interface{})["content"].(string)
 	data := map[string]interface{}{
-		"username": clientMsg.Data.(map[string]interface{})["username"].(string),
-		"uid":      clientMsg.Data.(map[string]interface{})["uid"].(string),
-		"group":    "123123",
+		"username": username,
+		"uid":      uid,
+		"group":    group,
+		"content":  content,
 		"time":     time.Now().UnixNano() / 1e6,
 	}
-	if status == msgTypePrivateChat || status == msgTypePublicChat {
-		data["content"] = clientMsg.Data.(map[string]interface{})["content"].(string)
+	status := clientMsg.Status
+	switch status {
+	case msgTypePrivateChat:
+		fmt.Println("私聊")
+	case msgTypePublicChat:
+		fmt.Println("群聊")
+	default:
+		fmt.Println("哈哈")
 	}
 	jsonStrServeMsg := Msg{
 		Status: status,
 		Data:   data,
 	}
 	serveMsgStr, _ := json.Marshal(jsonStrServeMsg)
-	return serveMsgStr, jsonStrServeMsg
+	return serveMsgStr, status, nil
 }

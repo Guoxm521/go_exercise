@@ -16,15 +16,25 @@
         />
       </div>
       <div class="form_container">
-        <el-form :model="form" label-position="top" label-width="120px">
-          <el-form-item label="">
-            <el-input v-model="form.name" placeholder="输入账号" />
+        <el-form
+          :rules="rules"
+          :model="form"
+          label-position="top"
+          label-width="120px"
+          ref="loginform"
+        >
+          <el-form-item label="" prop="account">
+            <el-input v-model="form.account" placeholder="输入账号" />
           </el-form-item>
-          <el-form-item label="">
-            <el-input v-model="form.password" placeholder="输入密码" />
+          <el-form-item label="" prop="password">
+            <el-input
+              v-model="form.password"
+              placeholder="输入密码"
+              type="password"
+            />
           </el-form-item>
           <el-form-item class="buttons">
-            <el-button type="primary">登录/注册</el-button>
+            <el-button type="primary" @click="handleLogin">登录/注册</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -33,9 +43,13 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
+import { login } from "@/api/index";
+import rules from "@/rules/login";
+import { setToken } from "@/utils/cookie";
+import { useRouter } from "vue-router";
 const form = reactive({
-  name: "",
+  account: "",
   password: "",
 });
 const user_avatar_list = reactive([
@@ -137,6 +151,28 @@ let select_icon = (index) => {
     }
   });
 };
+
+const loginform = ref();
+const router = useRouter();
+const handleLogin = () => {
+  loginform.value.validate(async (valid) => {
+    if (valid) {
+      let form_copy = Object.assign({}, form);
+      form_copy.avatar = String(select_avatar.index);
+      try {
+        let res = await login(form_copy);
+        if (res.code == 200) {
+          setToken(res.data.token);
+          router.push("/");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      return false;
+    }
+  });
+};
 </script>
 
 <style scoped lang="less">
@@ -147,7 +183,8 @@ let select_icon = (index) => {
   display: flex;
   justify-content: center;
   background: url("@/assets/images/cool-background.png");
-  background-size: 100%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   .main {
     width: 600px;
     padding: 128px 60px 48px;

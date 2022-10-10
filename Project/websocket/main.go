@@ -19,14 +19,15 @@ func Server(gin *gin.Context) {
 func RunSocket(gin *gin.Context) {
 	defer func() {
 		_err := recover()
-		fmt.Println("_err", _err)
+		fmt.Println("_err12", _err)
 	}()
-	wsUpgrade := websocket.Upgrader{}
+	wsUpgrade := websocket.Upgrader{
+		Subprotocols: []string{"token"},
+	}
 	wsUpgrade.CheckOrigin = func(r *http.Request) bool {
 		return true
 	}
 	conn, err := wsUpgrade.Upgrade(gin.Writer, gin.Request, nil)
-	//defer conn.Close() //链接关闭
 	if err != nil {
 		log.Printf("websocket connect error: %s", gin.Param("channel"))
 		return

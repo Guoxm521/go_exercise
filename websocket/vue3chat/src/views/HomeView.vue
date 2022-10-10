@@ -15,11 +15,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "HomeView",
-  components: {},
-};
+<script setup>
+import { getSocketInfo } from "@/api/index";
+getSocketInfo({}).then((res) => {
+  console.log(res);
+});
 </script>
 
 

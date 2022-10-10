@@ -13,6 +13,7 @@ func main() {
 		panic("配置错误" + _err.Error())
 	}
 	router := gin.Default()
+	router.Use(Cors())
 	route.RouterApi(router)
 	runHost = strings.Join([]string{_config.Server.Host, ":", _config.Server.Port}, "")
 	_gin := &http.Server{
