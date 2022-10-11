@@ -22,3 +22,11 @@ export const getSocketInfo = (param) => {
     data: param,
   })
 }
+
+export const getAccountInfo = (param) => {
+  return request({
+    url: "/account/info",
+    method: "get",
+    data: param,
+  })
+}

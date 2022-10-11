@@ -43,11 +43,16 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, computed } from "vue";
 import { login } from "@/api/index";
 import rules from "@/rules/login";
 import { setToken } from "@/utils/cookie";
 import { useRouter } from "vue-router";
+import { useUserStore } from "@/store/index";
+const userStore = useUserStore();
+const user_name = computed(() => {
+  return userStore.user_name;
+});
 const form = reactive({
   account: "",
   password: "",
@@ -163,6 +168,7 @@ const handleLogin = () => {
         let res = await login(form_copy);
         if (res.code == 200) {
           setToken(res.data.token);
+          userStore.getAccountInfo();
           router.push("/");
         }
       } catch (error) {

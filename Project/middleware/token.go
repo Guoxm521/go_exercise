@@ -29,6 +29,8 @@ func JWT() gin.HandlerFunc {
 		} else {
 			fmt.Println("=========", _claims)
 		}
+		ctx.Set("account", _claims.Account)
+		ctx.Set("account_id", _claims.AccountId)
 		ctx.Next()
 	}
 }

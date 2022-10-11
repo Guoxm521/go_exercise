@@ -92,7 +92,7 @@ func (c *Client) Write() {
 				return
 			}
 			log.Printf("client [%s] write message: %s", c.Id, string(message))
-			err := c.Socket.WriteMessage(websocket.BinaryMessage, message)
+			err := c.Socket.WriteMessage(websocket.TextMessage, message)
 			if err != nil {
 				log.Printf("client [%s] writemessage err: %s", c.Id, err)
 			}
@@ -110,12 +110,12 @@ func formatServeMsgStr(message []byte) ([]byte, int, error) {
 	}
 	username, _ := clientMsg.Data.(map[string]interface{})["username"].(string)
 	uid, _ := clientMsg.Data.(map[string]interface{})["uid"].(string)
-	group, _ := clientMsg.Data.(map[string]interface{})["group"].(string)
+	//group, _ := clientMsg.Data.(map[string]interface{})["group"].(string)
 	content, _ := clientMsg.Data.(map[string]interface{})["content"].(string)
 	data := map[string]interface{}{
 		"username": username,
 		"uid":      uid,
-		"group":    group,
+		"group":    "123123",
 		"content":  content,
 		"time":     time.Now().UnixNano() / 1e6,
 	}

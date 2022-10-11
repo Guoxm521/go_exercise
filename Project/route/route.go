@@ -29,6 +29,7 @@ func RouterApi(router *gin.Engine) {
 	{
 		jwt.GET("/ping1", ping.Ping())
 		jwt.POST("/account/add", account.AccountAdd())
+		jwt.GET("/account/info", account.AccountInfo())
 		jwt.GET("/socket/info", ws.GetWebsocketInfo())
 	}
 

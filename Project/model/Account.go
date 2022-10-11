@@ -51,10 +51,16 @@ func (that *Account) Add() (interface{}, error) {
 func (that *Account) Login() (interface{}, error) {
 	that.init()
 	_mode := that.mode
-	_b, _err := _mode.GetByAccount(that.mode.Account)
+	_newMode := db.NewAccount()
+	_b, _err := _newMode.GetByAccount(_mode.Account)
 	if !_b {
+		//账号不存在
 		that.mode.AccountId = uuid.NewV4().String()
 		_, _err = _mode.AddAccount(that.mode)
+	} else {
+		if _newMode.Password != _mode.Password {
+			return nil, errors.New("密码错误")
+		}
 	}
 	if _err != nil {
 		return nil, _err
@@ -70,4 +76,17 @@ func (that *Account) Login() (interface{}, error) {
 	_mp["account"] = _mode.Account
 	_mp["token"] = tokenString
 	return _mp, nil
+}
+
+func (that *Account) GetInfo(account string) (interface{}, error) {
+	that.init()
+	_newMode := db.NewAccount()
+	_b, _err := _newMode.GetByAccount(account)
+	if !_b {
+		return nil, errors.New("账号不存在")
+	}
+	if _err != nil {
+		return nil, _err
+	}
+	return _newMode, nil
 }

@@ -1,6 +1,5 @@
 <template>
 	<div class="home">
-		<header>聊天室</header>
 		<div class="main_box">
 			<RoomItem
 				:class="{ reverse: item % 2 }"
@@ -22,16 +21,16 @@
 			window.scroll({ top: height, left: 0, behavior: "smooth" });
 		}, 2000);
 	});
-	// const socket = io("ws://192.168.31.44:9999/socket");
 	let ws = new WebsocketHeartbeatJs({
-		url: "ws://192.168.31.44:9999/socket",
+		// url: "ws://192.168.31.44:9999/socket",
+		url: "ws://192.168.1.140:9999/socket",
 	});
 	ws.onopen = function () {
 		console.log("connect success");
-		websocketHeartbeatJs.send("hello server");
+		ws.send("hello server");
 	};
 	ws.onmessage = function (e) {
-		console.log(`onmessage: ${e.data}`);
+		console.log(`onmessage: ${e}`);
 	};
 	ws.onreconnect = function () {
 		console.log("reconnecting...");
@@ -70,17 +69,5 @@
 }
 .reverse {
 	align-self: flex-end;
-}
-header {
-	position: fixed;
-	top: 0;
-	left: 0;
-	height: 50px;
-	width: 100%;
-	background: #d5eae7;
-	box-sizing: border-box;
-	padding: 0 10px;
-	display: flex;
-	align-items: center;
 }
 </style>

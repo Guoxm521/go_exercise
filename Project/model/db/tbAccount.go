@@ -27,6 +27,6 @@ func (that *Account) AddAccount(data interface{}) (int64, error) {
 	return engine.Insert(data)
 }
 
-func (that *Account) GetByAccount(account interface{}) (bool, error) {
+func (that *Account) GetByAccount(account string) (bool, error) {
 	return engine.Where("account= ?", account).Get(that)
 }
