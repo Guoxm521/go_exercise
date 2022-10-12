@@ -112,11 +112,13 @@ func formatServeMsgStr(message []byte) ([]byte, int, error) {
 	uid, _ := clientMsg.Data.(map[string]interface{})["uid"].(string)
 	//group, _ := clientMsg.Data.(map[string]interface{})["group"].(string)
 	content, _ := clientMsg.Data.(map[string]interface{})["content"].(string)
+	avatar, _ := clientMsg.Data.(map[string]interface{})["avatar"].(string)
 	data := map[string]interface{}{
 		"username": username,
 		"uid":      uid,
 		"group":    "123123",
 		"content":  content,
+		"avatar":   avatar,
 		"time":     time.Now().UnixNano() / 1e6,
 	}
 	status := clientMsg.Status
