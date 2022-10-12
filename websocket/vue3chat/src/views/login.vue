@@ -49,6 +49,7 @@ import rules from "@/rules/login";
 import { setToken } from "@/utils/cookie";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/store/index";
+import { ElMessage } from "element-plus";
 const userStore = useUserStore();
 const user_name = computed(() => {
   return userStore.user_name;
@@ -170,6 +171,11 @@ const handleLogin = () => {
           setToken(res.data.token);
           userStore.getAccountInfo();
           router.push("/");
+        } else {
+          ElMessage({
+            message: res.message,
+            type: "warning",
+          });
         }
       } catch (error) {
         console.log(error);

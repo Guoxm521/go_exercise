@@ -4,6 +4,7 @@ const useUserStore = defineStore("user", {
   state: () => ({
     user_name: undefined,
     avatar: undefined,
+    uid: undefined,
   }),
   getters: {},
   actions: {
@@ -13,11 +14,15 @@ const useUserStore = defineStore("user", {
     setAvatar(avatar) {
       this.avatar = avatar
     },
+    setUid(uid) {
+      this.uid = uid
+    },
     async getAccountInfo() {
       let res = await getAccountInfo({})
       if (res.code === 200) {
         this.setAvatar(res.data.avatar)
         this.setUserName(res.data.account)
+        this.setUid(res.data.account_id)
       }
     },
   },

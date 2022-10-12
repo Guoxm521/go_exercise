@@ -1,8 +1,8 @@
 import router from "./router"
-import { setToken, getToken } from "@/utils/cookie"
 import { judgeCookie } from "@/utils/filter"
 import { useUserStore } from "@/store/index"
 
+let whiteList = ["/room"]
 router.beforeEach((to, from, next) => {
   if (judgeCookie()) {
     const userStore = useUserStore()
@@ -18,7 +18,11 @@ router.beforeEach((to, from, next) => {
     if (to.path === "/login") {
       next()
     } else {
-      next({ path: "/login" })
+      if (whiteList.indexOf(to.path) !== -1) {
+        next()
+      } else {
+        next({ path: "/login" })
+      }
     }
   }
 })
