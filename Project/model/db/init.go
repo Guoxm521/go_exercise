@@ -28,6 +28,7 @@ func Init() {
 		new(GithubTrending),
 		new(GithubLanguage),
 		new(GithubSince),
+		new(Message),
 	}
 	if err := engine.Sync2(_slice...); err != nil {
 		panic("db init fail!" + err.Error())

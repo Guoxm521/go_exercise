@@ -2,6 +2,7 @@ package websocket
 
 import (
 	"encoding/json"
+	"example.com/m/v2/model/db"
 	"fmt"
 	"github.com/gorilla/websocket"
 	"log"
@@ -135,5 +136,13 @@ func formatServeMsgStr(message []byte) ([]byte, int, error) {
 		Data:   data,
 	}
 	serveMsgStr, _ := json.Marshal(jsonStrServeMsg)
+	//---------------------------------------
+	_mode := db.NewMessage()
+	_saveMessage := db.Message{}
+	_saveMessage.UId = uid
+	_saveMessage.Group = "123123"
+	_saveMessage.Content = content
+	_c, _err := _mode.Add(&_saveMessage)
+	fmt.Println("=====================存储", _c, _err)
 	return serveMsgStr, status, nil
 }
