@@ -30,3 +30,17 @@ func (that *Account) AddAccount(data interface{}) (int64, error) {
 func (that *Account) GetByAccount(account string) (bool, error) {
 	return engine.Where("account= ?", account).Get(that)
 }
+
+func (that *Account) GetAccountList(search interface{}) ([]*Account, error) {
+	_dataList := make([]*Account, 0)
+	_uids := search.(map[string]interface{})["uids"].([]string)
+	_session := engine.NewSession()
+	defer _session.Close()
+	if len(_uids) > 0 {
+		_session.In("`account_id`", _uids)
+	}
+	if _err := _session.Desc("c_time").Find(&_dataList); _err != nil {
+		return nil, _err
+	}
+	return _dataList, nil
+}

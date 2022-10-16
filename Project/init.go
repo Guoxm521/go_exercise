@@ -2,6 +2,7 @@ package main
 
 import (
 	"example.com/m/v2/database"
+	"example.com/m/v2/websocket"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -20,6 +21,7 @@ func Init() (*database.ConfigModel, error) {
 	database.ConnMySQL(AppConfig.MySql)
 	gin.DisableConsoleColor()
 	gin.SetMode(AppConfig.Server.Mode)
+	websocket.Server()
 	return AppConfig, nil
 }
 

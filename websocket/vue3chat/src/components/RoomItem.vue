@@ -5,7 +5,7 @@
       <img :src="avatar" alt="" />
     </div>
     <div :class="['right', reverse ? 'right_right' : 'right_left']">
-      <h2>{{ content.username }}</h2>
+      <h2>{{ content.user_name }}</h2>
       <p>{{ parseTime(content.time) }}</p>
       <div class="content">
         {{ content.content }}

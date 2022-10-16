@@ -18,7 +18,7 @@ func (that *Message) Add(data interface{}) (int64, error) {
 	return engine.Insert(data)
 }
 
-func (that *Message) List(page, size int) ([]*Message, error) {
+func (that *Message) List(page, size int, search interface{}) ([]*Message, error) {
 	if page < 1 {
 		page = 1
 	}
@@ -27,8 +27,32 @@ func (that *Message) List(page, size int) ([]*Message, error) {
 	}
 	_start := (page - 1) * size
 	_dataList := make([]*Message, 0)
-	if _err := engine.Limit(size, _start).Desc("id").Find(&_dataList); _err != nil {
+	_group := search.(map[string]interface{})["group"].(string)
+	_uid := search.(map[string]interface{})["uid"].(string)
+	_session := engine.NewSession()
+	defer _session.Close()
+	if _group != "" {
+		_session.Where("`group` = ?", _group)
+	}
+	if _uid != "" {
+		_session.Where("`uid` = ?", _uid)
+	}
+	if _err := _session.Limit(size, _start).Asc("c_time").Find(&_dataList); _err != nil {
 		return nil, _err
 	}
 	return _dataList, nil
+}
+
+func (that *Message) Count(search interface{}) (int64, error) {
+	_session := engine.NewSession()
+	defer _session.Close()
+	_group := search.(map[string]interface{})["group"].(string)
+	_uid := search.(map[string]interface{})["uid"].(string)
+	if _group != "" {
+		_session.Where("`group` = ?", _group)
+	}
+	if _uid != "" {
+		_session.Where("`uid` = ?", _uid)
+	}
+	return _session.Count(that)
 }

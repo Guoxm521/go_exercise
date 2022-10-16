@@ -3,6 +3,7 @@ package route
 import (
 	"example.com/m/v2/controller/account"
 	"example.com/m/v2/controller/github"
+	"example.com/m/v2/controller/message"
 	"example.com/m/v2/controller/ping"
 	"example.com/m/v2/controller/ws"
 	"example.com/m/v2/database"
@@ -24,13 +25,13 @@ func RouterApi(router *gin.Engine) {
 	router.POST("/account/login", account.AccountLogin())
 	router.GET("/github/trending", github.GithubTrendingList())
 	jwt := router.Group("/")
-	router.GET("/socket", websocket.Server)
+	router.GET("/socket/:group", websocket.RunSocket)
 	jwt.Use(middleware.JWT())
 	{
 		jwt.GET("/ping1", ping.Ping())
 		jwt.POST("/account/add", account.AccountAdd())
 		jwt.GET("/account/info", account.AccountInfo())
 		jwt.GET("/socket/info", ws.GetWebsocketInfo())
+		jwt.POST("/message/list", message.MessageList())
 	}
-
 }

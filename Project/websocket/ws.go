@@ -68,11 +68,10 @@ func (c *Client) Read() {
 			fmt.Println("私聊")
 		case msgTypePublicChat:
 			group, _ := clientMsg.Data.(map[string]interface{})["group"].(string)
-			fmt.Println("group", group)
-			WebsocketManager.SendGroup("123123", _message)
+			WebsocketManager.SendGroup(group, _message)
 		default:
 			if string(message) == "heartbeat" {
-				c.Socket.WriteMessage(websocket.TextMessage, []byte(`{"status":0,"data":"heartbeat ok312321312312"}`))
+				c.Socket.WriteMessage(websocket.TextMessage, []byte(`{"status":0,"data":"heartbeat ok"}`))
 			}
 		}
 	}
@@ -109,18 +108,18 @@ func formatServeMsgStr(message []byte) ([]byte, int, error) {
 		log.Printf("消息解析失败,消息[%s],错误[%s],", _err, string(message))
 		return nil, 0, _err
 	}
-	username, _ := clientMsg.Data.(map[string]interface{})["username"].(string)
+	user_name, _ := clientMsg.Data.(map[string]interface{})["user_name"].(string)
 	uid, _ := clientMsg.Data.(map[string]interface{})["uid"].(string)
-	//group, _ := clientMsg.Data.(map[string]interface{})["group"].(string)
+	group, _ := clientMsg.Data.(map[string]interface{})["group"].(string)
 	content, _ := clientMsg.Data.(map[string]interface{})["content"].(string)
 	avatar, _ := clientMsg.Data.(map[string]interface{})["avatar"].(string)
 	data := map[string]interface{}{
-		"username": username,
-		"uid":      uid,
-		"group":    "123123",
-		"content":  content,
-		"avatar":   avatar,
-		"time":     time.Now().UnixNano() / 1e6,
+		"user_name": user_name,
+		"uid":       uid,
+		"group":     group,
+		"content":   content,
+		"avatar":    avatar,
+		"time":      time.Now().UnixNano() / 1e6,
 	}
 	status := clientMsg.Status
 	switch status {
@@ -140,7 +139,7 @@ func formatServeMsgStr(message []byte) ([]byte, int, error) {
 	_mode := db.NewMessage()
 	_saveMessage := db.Message{}
 	_saveMessage.UId = uid
-	_saveMessage.Group = "123123"
+	_saveMessage.Group = group
 	_saveMessage.Content = content
 	_c, _err := _mode.Add(&_saveMessage)
 	fmt.Println("=====================存储", _c, _err)

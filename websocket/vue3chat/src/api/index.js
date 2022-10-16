@@ -30,3 +30,12 @@ export const getAccountInfo = (param) => {
     data: param,
   })
 }
+
+
+export const getMessageList = (param) => {
+  return request({
+    url: "/message/list",
+    method: "post",
+    data: param,
+  })
+}

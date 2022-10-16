@@ -9,14 +9,14 @@ import (
 	"net/http"
 )
 
-func Server(gin *gin.Context) {
+func Server() {
 	go WebsocketManager.Start()
 	go WebsocketManager.SendService()
 	go WebsocketManager.SendGroupService()
-	RunSocket(gin)
 }
 
 func RunSocket(gin *gin.Context) {
+	fmt.Println("-==----------------", gin.Param("group"))
 	defer func() {
 		_err := recover()
 		fmt.Println("_err12", _err)
@@ -33,9 +33,9 @@ func RunSocket(gin *gin.Context) {
 		return
 	}
 	client := &Client{
-		Id: uuid.NewV4().String(),
-		//Group:   gin.Param("channel"),
-		Group:   "123123",
+		Id:    uuid.NewV4().String(),
+		Group: gin.Param("group"),
+		//Group:   "123123",
 		Socket:  conn,
 		Message: make(chan []byte, 1024),
 	}
