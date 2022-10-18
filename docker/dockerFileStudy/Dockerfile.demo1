@@ -1,0 +1,8 @@
+FROM nginx
+RUN echo '<h1>my dockerfile</h1>' > /usr/share/nginx/html/index.html
+
+
+
+
+# docker build -t mynginx11:v1 .   构建镜像
+#docker run --privileged=true -p 7070:80 -itd  mynginx11:v1

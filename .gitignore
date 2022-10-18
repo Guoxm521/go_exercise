@@ -3,6 +3,7 @@
 .idea
 *.exe
 websocket/vue3chat/node_modules
+docker/node_docker/node_modules
 websocket/vue3chat/dist
 /upload
 /tmp
