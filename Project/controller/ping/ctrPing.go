@@ -17,7 +17,7 @@ func Ping() gin.HandlerFunc {
 		_logic := model.NewLogic().NewGithubLanguage()
 		_logic.Add()
 		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
+			"message": "pong 鑫测试",
 		})
 	}
 }
