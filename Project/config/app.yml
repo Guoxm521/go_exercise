@@ -7,7 +7,7 @@ server:
   app_key: 9ZwFiE9cbyvfoHnXuib2UUaEseoCnAnW
 #MySQL
 mysql:
-  host: 172.17.0.3 #数据库连接地址
+  host: 42.193.230.81 #数据库连接地址
   port: 3306 #端口
   user: root #用户名
   password: gxm1234920 #密码
