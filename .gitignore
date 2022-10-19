@@ -9,5 +9,5 @@ websocket/vue3chat/dist
 /tmp
 go.sum
 spider/images
-Project/config.pro/app.yml
-Project/config/app.yml
+Project/config.pro/*
+Project/config/*
