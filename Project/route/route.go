@@ -21,11 +21,12 @@ func config() {
 
 func RouterApi(router *gin.Engine) {
 	config()
-	router.GET("/ping", ping.Ping())
-	router.POST("/account/login", account.AccountLogin())
-	router.GET("/github/trending", github.GithubTrendingList())
-	jwt := router.Group("/")
-	router.GET("/socket/:group", websocket.RunSocket)
+	group := router.Group("/go")
+	group.GET("/ping", ping.Ping())
+	group.POST("/account/login", account.AccountLogin())
+	group.GET("/github/trending", github.GithubTrendingList())
+	jwt := router.Group("/go")
+	group.GET("/socket/:group", websocket.RunSocket)
 	jwt.Use(middleware.JWT())
 	{
 		jwt.GET("/ping1", ping.Ping())

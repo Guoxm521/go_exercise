@@ -7,10 +7,10 @@ server:
   app_key: 9ZwFiE9cbyvfoHnXuib2UUaEseoCnAnW
 #MySQL
 mysql:
-  host: 192.168.31.44 #数据库连接地址
+  host: 42.193.230.81 #数据库连接地址
   port: 3306 #端口
   user: root #用户名
-  password: 123456 #密码
+  password: gxm1234920 #密码
   dbname: gxm #数据库
   prefix: gxm_ #表前缀
   max_idle_conn: 1000000 #设置连接池的空闲数大小
