@@ -5,7 +5,7 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: import("@/views/login.vue"),
+    component: () => import("./../views/login.vue"),
   },
   {
     path: "/",
@@ -14,19 +14,19 @@ const routes = [
       {
         path: "/",
         name: "home",
-        component: import("@/views/HomeView.vue"),
+        component: () => import("@/views/HomeView.vue"),
       },
       {
         path: "/room",
         name: "room",
-        component: import("@/views/Room.vue"),
+        component: () => import("@/views/Room.vue"),
       },
     ],
   },
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHashHistory("/"),
   routes,
 })
 
