@@ -18,5 +18,6 @@ else
   npm run build
   sleep 2s
   exit
+  rm -rf /home/nginx/html/socket/*
   cp -r /home/node/vue3chat/dist/* /home/nginx/html/socket/
 fi
