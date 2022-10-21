@@ -2,7 +2,7 @@
 if [ ! -d "/home/node/vue3chat" ];then
   echo "文件不存在1"
 else
-  rm -f /home/node/vue3chat
+  rm -rf /home/node/vue3chat
 fi
 
 if [ ! -d "/home/go/go_exercise/websocket" ];then
