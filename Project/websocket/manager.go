@@ -13,6 +13,7 @@ type Manager struct {
 	GroupMessage            chan *GroupMessageData
 	Lock                    sync.Mutex
 	groupCount, clientCount uint
+	groupInfo               map[string]int64
 }
 
 var WebsocketManager = Manager{
@@ -21,6 +22,7 @@ var WebsocketManager = Manager{
 	UnRegister:   make(chan *Client, 128),
 	GroupMessage: make(chan *GroupMessageData, 128),
 	Message:      make(chan *MessageData, 128),
+	groupInfo:    make(map[string]int64, 0),
 	groupCount:   0,
 	clientCount:  0,
 }
@@ -37,10 +39,12 @@ func (manager *Manager) Start() {
 			manager.Lock.Lock()
 			if manager.Group[client.Group] == nil {
 				manager.Group[client.Group] = make(map[string]*Client)
+				manager.groupInfo[client.Group] = 0
 				manager.groupCount += 1
 			}
 			manager.Group[client.Group][client.Id] = client
 			manager.clientCount += 1
+			manager.groupInfo[client.Group] += 1
 			manager.Lock.Unlock()
 		//注销
 		case client := <-manager.UnRegister:
@@ -52,6 +56,7 @@ func (manager *Manager) Start() {
 					client.Socket.Close()
 					delete(manager.Group[client.Group], client.Id)
 					manager.clientCount -= 1
+					manager.groupInfo[client.Group] -= 1
 					if len(manager.Group[client.Group]) == 0 {
 						delete(manager.Group, client.Group)
 						manager.groupCount -= 1
@@ -130,5 +135,6 @@ func (manager *Manager) Info() map[string]interface{} {
 	managerInfo["chanUnregisterLen"] = len(manager.UnRegister)
 	managerInfo["chanMessageLen"] = len(manager.Message)
 	managerInfo["chanGroupMessageLen"] = len(manager.GroupMessage)
+	managerInfo["groupInfo"] = manager.groupInfo
 	return managerInfo
 }

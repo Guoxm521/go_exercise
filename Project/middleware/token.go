@@ -39,6 +39,7 @@ type UserInfo struct {
 	Account   string `form:"account"`
 	Password  string `form:"password"`
 	AccountId string `form:"account_id"`
+	Avatar    string `form:"avatar"`
 }
 
 type MyClaims struct {

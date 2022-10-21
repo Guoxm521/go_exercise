@@ -16,7 +16,6 @@ type ConfigModel struct {
 	MySql  *MysqlModel  `yaml:"mysql"`
 }
 
-
 type ServerModel struct {
 	Mode               string `yaml:"mode"`                 // gin运行模式
 	Host               string `yaml:"host"`                 // 运行访问域
@@ -26,19 +25,19 @@ type ServerModel struct {
 	AppKey             string `yaml:"app_key"`              // 应用key
 }
 
-func ReadAppConfig()(*ConfigModel,error)  {
-	fPath,_ := os.Getwd()
-	fPath = path.Join(fPath,"config")
-	configPath := flag.String("c",fPath,"config file path")
+func ReadAppConfig() (*ConfigModel, error) {
+	fPath, _ := os.Getwd()
+	fPath = path.Join(fPath, "config")
+	configPath := flag.String("c", fPath, "config file path")
 	flag.Parse()
- 	err := loadConfigInfo(*configPath,"app.yml",&appConfigInfo)
+	err := loadConfigInfo(*configPath, "app.yml", &appConfigInfo)
 	return appConfigInfo, err
 }
 
-func loadConfigInfo(configPath string,yml string,structObject interface{})(err error)  {
+func loadConfigInfo(configPath string, yml string, structObject interface{}) (err error) {
 	var (
 		filePath string
-		wr string
+		wr       string
 	)
 	if configPath == "" {
 		wr, _ = os.Getwd()
@@ -46,13 +45,13 @@ func loadConfigInfo(configPath string,yml string,structObject interface{})(err e
 	} else {
 		wr = path.Join(wr, configPath)
 	}
-	filePath = path.Join(wr,yml)
-	configData,err := ioutil.ReadFile(filePath)
+	filePath = path.Join(wr, yml)
+	configData, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		fmt.Printf(" config file read failed: %s", err)
 		os.Exit(-1)
 	}
-	err = yaml.Unmarshal(configData,structObject)
+	err = yaml.Unmarshal(configData, structObject)
 	if err != nil {
 		fmt.Printf(" config parse failed: %s", err)
 		os.Exit(-1)

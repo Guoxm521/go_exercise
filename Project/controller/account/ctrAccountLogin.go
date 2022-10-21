@@ -16,6 +16,7 @@ func AccountLogin() gin.HandlerFunc {
 		_logic := model.NewLogic().NewAccount()
 		_logic.SetTableField("account", that.Account)
 		_logic.SetTableField("password", that.Password)
+		_logic.SetTableField("avatar", that.Avatar)
 		_data, _exp := _logic.Login()
 		if _exp != nil {
 			common.Response(ctx, _exp)

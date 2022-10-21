@@ -70,6 +70,7 @@ func (that *Account) Login() (interface{}, error) {
 		Account:   _mode.Account,
 		Password:  _mode.Password,
 		AccountId: _mode.AccountId,
+		Avatar:    _mode.Avatar,
 	}
 	tokenString, _err := middleware.GenerateToken(user)
 	_mp := make(map[string]interface{}, 0)

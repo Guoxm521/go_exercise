@@ -12,7 +12,7 @@
           <h2>{{ item }}</h2>
           <div class="user_box">
             <el-icon color="#32CCBC"><User /></el-icon>
-            <span>23</span>
+            <span>{{ group_info.groupInfo[item] || 0 }}</span>
           </div>
         </div>
       </div>
@@ -21,10 +21,20 @@
 </template>
 
 <script setup>
+import { reactive } from "vue";
 import { getSocketInfo } from "@/api/index";
 import { useRouter } from "vue-router";
+const group_info = reactive({
+  chanGroupMessageLen: 0,
+  chanMessageLen: 0,
+  groupInfo: {},
+  
+});
 getSocketInfo({}).then((res) => {
   console.log(res);
+  if (res.code === 200) {
+    Object.assign(group_info, res.data);
+  }
 });
 const router = useRouter();
 function handleClick(index) {

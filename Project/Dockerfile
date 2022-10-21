@@ -3,6 +3,6 @@ MAINTAINER GxmProjecrt
 WORKDIR  /app
 COPY . .
 RUN GOPROXY="https://goproxy.io" go get -d -v ./...
-RUN GOPROXY="https://goproxy.io" go build -o go_docker_project
+RUN GOPROXY="https://goproxy.io" go build -o go_docker_project -c config.pro
 ENV TZ=Asia/Shanghai
 CMD ["/app/go_docker_project"]
