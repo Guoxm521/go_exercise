@@ -20,4 +20,5 @@ else
   exit
   rm -rf /home/nginx/html/socket/*
   cp -r /home/node/vue3chat/dist/* /home/nginx/html/socket/
+  echo '执行成功'
 fi
